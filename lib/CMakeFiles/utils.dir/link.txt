@@ -1,2 +1,0 @@
-/usr/bin/ar.exe cr libutils.a  CMakeFiles/utils.dir/ResourceLock.cpp.o
-/usr/bin/ranlib.exe libutils.a
