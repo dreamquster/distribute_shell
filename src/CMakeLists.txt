@@ -1,0 +1,13 @@
+CMAKE_MINIMUM_REQUIRED(VERSION 2.8)
+PROJECT(DistributeShell)
+SET(CMAKE_LEGACY_CYGWIN_WIN32 0)
+SET(CMAKE_CXX_FLAGS_DEBUG "$ENV{CXXFLAGS} -O0 -Wall -g -ggdb ")
+SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
+SET(CMAKE_BUILD_TYPE Debug)
+
+LINK_DIRECTORIES(/usr/local/lib)
+SET(SRC main.cpp Client.cpp Configure.cpp Connection.cpp YarnRpcChannel.cpp YarnRpcRequest.cpp)
+ADD_SUBDIRECTORY(yarn_protocal)
+ADD_SUBDIRECTORY(utils)
+ADD_EXECUTABLE(distribute_shell ${SRC})
+TARGET_LINK_LIBRARIES(distribute_shell yarn_protocal utils  tinyxml2 protobuf pthread)

@@ -1,0 +1,16 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/cygdrive/e/WinShare/my_hadoop_project/distribute_shell/utils/ResourceLock.cpp
+ResourceLock.h
+/cygdrive/e/WinShare/my_hadoop_project/distribute_shell/utils/ResourceLock.h
+
+/cygdrive/e/WinShare/my_hadoop_project/distribute_shell/utils/ResourceLock.h
+pthread.h
+-
+
