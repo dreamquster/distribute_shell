@@ -26,3 +26,15 @@
 *.exe
 *.out
 *.app
+
+
+# Directories
+log/
+bin/
+build/
+ipch/
+lib/
+logs/
+
+# VCFiles
+*.opensdf

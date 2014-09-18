@@ -15,41 +15,11 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="YarnRpcChannel.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Configure.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Connection.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="Client.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="utils\ResourceLock.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="YarnRpcRequest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="YarnRpcChannel.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Configure.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Connection.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Client.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="utils\ResourceLock.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -57,9 +27,6 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="utils\const_variable.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="YarnRpcRequest.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

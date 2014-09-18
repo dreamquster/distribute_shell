@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DistributeShell", "DistributeShell.vcxproj", "{03144493-E8F5-4EF2-B200-D2F3AB2EBF36}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "UnitTest", "..\gtest_learn\UnitTest\UnitTest.vcxproj", "{6AAC4AF2-25CE-423F-97CA-5746D936A374}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{03144493-E8F5-4EF2-B200-D2F3AB2EBF36}.Debug|Win32.Build.0 = Debug|Win32
 		{03144493-E8F5-4EF2-B200-D2F3AB2EBF36}.Release|Win32.ActiveCfg = Release|Win32
 		{03144493-E8F5-4EF2-B200-D2F3AB2EBF36}.Release|Win32.Build.0 = Release|Win32
+		{6AAC4AF2-25CE-423F-97CA-5746D936A374}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6AAC4AF2-25CE-423F-97CA-5746D936A374}.Debug|Win32.Build.0 = Debug|Win32
+		{6AAC4AF2-25CE-423F-97CA-5746D936A374}.Release|Win32.ActiveCfg = Release|Win32
+		{6AAC4AF2-25CE-423F-97CA-5746D936A374}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

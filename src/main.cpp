@@ -1,6 +1,6 @@
 #include <iostream>
 #include "tinyxml2.h"
-#include "Configure.h"
+#include "yarn_client/Configure.h"
 using namespace std;
 
 int main(int argc, char* args[]) {
