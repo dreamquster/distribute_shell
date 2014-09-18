@@ -5,14 +5,18 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>  
 #include <sstream>
+#include <iomanip>
 #include "utils/const_variable.h"
 #include <google/protobuf/service.h>
 #include <google/protobuf/io/coded_stream.h>
-#include <google/protobuf/io/zero_copy_stream.h>
 #include <google/protobuf/io/zero_copy_stream_impl_lite.h>
+#include "YarnRpcRequest.h"
+#include "yarn_protocal/yarn_service_protos.pb.h"
+#include "yarn_protocal/ProtobufRpcEngine.pb.h"
 
 using namespace google::protobuf;
 using namespace google::protobuf::io;
+using namespace hadoop::yarn;
 using std::ostringstream;
 using std::endl;
 
@@ -47,18 +51,32 @@ Connection::~Connection(void)
 }
 
 
-int Connection::write(const string& msg) const
+int Connection::write(const string& msg)
 { 
 	if (m_remote_sock != NetUtils::INVALID_SOCKET) {
-		return send(m_remote_sock, msg.c_str(), msg.length(), 0);
+		int len = msg.length();
+		write((const char*)msg.c_str(), len);
+		return 0;
 	}
 	return ERR_RETURN;
 }
 
-void Connection::write( char* message_data, int message_len )
+void Connection::write(const char* message_data, int message_len )
 {
 	if (m_remote_sock != NetUtils::INVALID_SOCKET) {
-		send(m_remote_sock, message_data, message_len, 0);
+		int total_send_bytes = 0;
+		while(total_send_bytes < message_len) {
+			int send_bytes = send(m_remote_sock, message_data + total_send_bytes, 
+				message_len - total_send_bytes, 0);
+			if (ERR_RETURN == send_bytes) {
+				if (total_send_bytes < message_len) {
+					LOG4CPLUS_ERROR(Connection::LOG, "has a remaining "
+						<< (message_len - total_send_bytes) << " bytes");
+				}
+				return;
+			}
+			total_send_bytes += send_bytes;
+		}
 	}
 }
 
@@ -78,46 +96,37 @@ void Connection::send_connection_context(string& protocal,const char* auth_metho
 
 	RpcRequestHeaderProto rpc_request_header;
 	rpc_request_header.set_rpckind(RPC_PROTOCOL_BUFFER);
-	rpc_request_header.set_rpcop(RpcRequestHeaderProto::RPC_CONTINUATION_PACKET);
+	rpc_request_header.set_rpcop(RpcRequestHeaderProto::RPC_FINAL_PACKET);
 	rpc_request_header.set_callid(CONNECTION_CONTEXT_CALL_ID);
 	rpc_request_header.set_retrycount(RpcConstant::INVALID_TRIES);
 	rpc_request_header.set_clientid(client_id.c_str());
 
-	int header_size = rpc_request_header.ByteSize();
-	int request_size = connect_context_message.ByteSize();
-	int total_size = CodedOutputStream::VarintSize32(header_size) + header_size 
-		+ CodedOutputStream::VarintSize32(request_size) + request_size; 
-					
-	char arr_buffer[1024];
-	ArrayOutputStream arr_ostream(arr_buffer, 1024);
-	CodedOutputStream coded_ostream(&arr_ostream);
-	char int_buf[4];
-	fill_big_endian_int32(total_size, int_buf);
-	coded_ostream.WriteRaw(&total_size, sizeof(total_size));
-	uint8* request_buffer = coded_ostream.GetDirectBufferForNBytesAndAdvance(
-		CodedOutputStream::VarintSize32(header_size) + header_size);
-	if (NULL != request_buffer) {
-		coded_ostream.WriteVarint32(header_size);
-		rpc_request_header.SerializeToCodedStream(&coded_ostream);
+	YarnRpcRequest yarn_rpc_req(&rpc_request_header, &connect_context_message);
+
+	int len = yarn_rpc_req.get_length();
+	if (0 < len) {
+		write(yarn_rpc_req.c_str(), len);
 	}
-
-	coded_ostream.WriteVarint32(request_size);
-	connect_context_message.SerializeToCodedStream(&coded_ostream);
-	
-	debug_msg = "CodedStream size:" + coded_ostream.ByteCount();
-	LOG4CPLUS_DEBUG(Connection::LOG, debug_msg.c_str());
-
-	char* message_data = NULL;
-	int message_len = 0;
-	coded_ostream.GetDirectBufferPointer((void**)&message_data, &message_len);
-	
-	debug_msg = string(message_data, message_data + message_len);
-	LOG4CPLUS_DEBUG(Connection::LOG, debug_msg.c_str());
-
-	write(message_data, message_len);
 
 	return;
 }
+
+void Connection::send_rpc_request(Call* rpc_call){
+	RpcRequestHeaderProto rpc_request_header;
+	rpc_request_header.set_rpckind(rpc_call->Rpc_kind());
+	rpc_request_header.set_rpcop(RpcRequestHeaderProto::RPC_FINAL_PACKET);
+	rpc_request_header.set_callid(RPC_CALL_ID);
+	rpc_request_header.set_retrycount(RpcConstant::INVALID_TRIES);
+	rpc_request_header.set_clientid(client_id.c_str());
+	
+	RpcMessageWrapper rpc_request_wrapper(&rpc_request_header, rpc_call->Request_msg());
+
+	int len = rpc_request_wrapper.get_length();
+	if (0 < len) {
+		write(rpc_request_wrapper.c_str(), len);
+	}
+}
+
 void* Connection::call_handler(void* args) {
 	Connection* call_connection= static_cast<Connection*>(args);
 	if (call_connection) {
@@ -126,7 +135,7 @@ void* Connection::call_handler(void* args) {
 	}
 }
 
-int Connection::sendConncetionHeader(void)
+int Connection::send_conncetion_header(void)
 {
 	const char server_class = 0; //int0对应的char 为48
 	const char auth_callid = 0;

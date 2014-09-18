@@ -78,12 +78,39 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\test\BlockingQueueTest.cc" />
+    <ClCompile Include="src\test\ConnnectionTest.cpp" />
+    <ClCompile Include="src\test\main.cpp" />
+    <ClCompile Include="src\yarn_client\Client.cpp" />
+    <ClCompile Include="src\yarn_client\Configure.cpp" />
+    <ClCompile Include="src\yarn_client\Connection.cpp" />
+    <ClCompile Include="src\yarn_client\utils\BlockingQueue.cc" />
+    <ClCompile Include="src\yarn_client\utils\ResourceLock.cpp" />
+    <ClCompile Include="src\yarn_client\YarnRpcChannel.cpp" />
+    <ClCompile Include="src\yarn_client\YarnRpcRequest.cpp" />
     <ClCompile Include="utils\ResourceLock.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\yarn_client\Client.h" />
+    <ClInclude Include="src\yarn_client\common.h" />
+    <ClInclude Include="src\yarn_client\Configure.h" />
+    <ClInclude Include="src\yarn_client\Connection.h" />
+    <ClInclude Include="src\yarn_client\utils\const_variable.h" />
+    <ClInclude Include="src\yarn_client\utils\ByteUtils.h" />
+    <ClInclude Include="src\yarn_client\utils\ResourceLock.h" />
+    <ClInclude Include="src\yarn_client\YarnRpcChannel.h" />
+    <ClInclude Include="src\yarn_client\YarnRpcRequest.h" />
     <ClInclude Include="utils\blocking_list.h" />
     <ClInclude Include="utils\const_variable.h" />
     <ClInclude Include="utils\ResourceLock.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\CMakeLists.txt" />
+    <None Include="src\test\CMakeLists.txt" />
+    <None Include="src\yarn-conf.xml" />
+    <None Include="src\yarn_client\CMakeLists.txt" />
+    <None Include="src\yarn_client\utils\CMakeLists.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

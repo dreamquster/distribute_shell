@@ -4,6 +4,8 @@
 #include <log4cplus/configurator.h>
 #include <log4cplus/loggingmacros.h>
 #include <log4cplus/helpers/stringhelper.h>
+using log4cplus::Logger;
+
 
 
 #endif

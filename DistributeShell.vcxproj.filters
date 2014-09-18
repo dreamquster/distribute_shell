@@ -18,6 +18,39 @@
     <ClCompile Include="utils\ResourceLock.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\yarn_client\Client.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\Configure.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\Connection.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\YarnRpcChannel.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\YarnRpcRequest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\utils\BlockingQueue.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\utils\ResourceLock.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\BlockingQueueTest.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\ConnnectionTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\ResourceLock.h">
@@ -29,5 +62,39 @@
     <ClInclude Include="utils\const_variable.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="src\yarn_client\YarnRpcRequest.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\Client.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\common.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\Configure.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\Connection.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\YarnRpcChannel.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\utils\ResourceLock.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\utils\const_variable.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\utils\ByteUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="src\yarn_client\CMakeLists.txt" />
+    <None Include="src\CMakeLists.txt" />
+    <None Include="src\yarn-conf.xml" />
+    <None Include="src\yarn_client\utils\CMakeLists.txt" />
+    <None Include="src\test\CMakeLists.txt" />
   </ItemGroup>
 </Project>

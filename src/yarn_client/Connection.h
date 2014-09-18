@@ -4,11 +4,13 @@
 #include <iostream>
 #include <map>
 #include "pthread.h"
+#include "common.h"
 #include "utils/ResourceLock.h"
 #include "yarn_protocal/RpcHeader.pb.h"
 #include "yarn_protocal/ipcConnectionContext.pb.h"
-#include "yarn_protocal/RpcHeader.pb.h"
-#include "common.h"
+
+#include "YarnRpcRequest.h"
+
 
 using namespace hadoop::common;
 using std::string;
@@ -19,7 +21,7 @@ using log4cplus::Logger;
 
 class Call :virtual public ResourceLock{
 public:
-	Call(int id, RpcKindProto rpc_kind, ::google::protobuf::Message* request_param) {
+	Call(int id, RpcKindProto rpc_kind, RpcCodedMessage* request_param) {
 		this->m_rpc_kind = rpc_kind;
 		this->m_id = id;
 		this->m_request_msg = request_param;
@@ -38,6 +40,7 @@ public:
 	int Id() const { return m_id; }
 	void Id(int val) { m_id = val; }
 
+	RpcCodedMessage* Request_msg() const { return m_request_msg; }
 
 
 private:
@@ -46,13 +49,13 @@ private:
 	int m_id;
 	RpcKindProto m_rpc_kind;
 	bool m_done;
-	::google::protobuf::Message* m_request_msg;
-	::google::protobuf::Message* m_response_msg;
-
+	RpcCodedMessage* m_request_msg;
 	
-
+	::google::protobuf::Message* m_response_msg;	
 
 };
+
+
 
 class Connection : virtual public ResourceLock
 {
@@ -61,28 +64,23 @@ public:
 
 	Connection(const string& host, const int port);
 	~Connection(void);
-	int write(const string& msg) const;
+	int write(const string& msg);
 
 	int receive(char* buf, int buf_len);
 
 	static void* call_handler(void* p_conn);
+
+	void send_rpc_request(Call* rpc_call);
 private:
 	void send_connection_context(string& protocal, const char* auth_method);
 
-	void write(char* message_data, int message_len);
-private:
-	void fill_big_endian_int32(int val, char* buf) {
-		if (buf) {
-			buf[0] = (val>>24) & 0xFF;
-			buf[1] = (val>>16) & 0xFF;
-			buf[2] = (val>>8) & 0xFF;
-			buf[3] = (val) & 0xFF;
-		}		
-	}
+	void write(const char* message_data, int message_len);
+
 
 private:
 	static const int CONNECTION_CONTEXT_CALL_ID = -3;
-
+	static const int RPC_CALL_ID = 0;
+private:
 	string m_remote_host;
 	int	m_remote_port;
 	int state;
@@ -94,7 +92,7 @@ private:
 
 public:
 	
-	int sendConncetionHeader(void);
+	int send_conncetion_header(void);
 	int shutdown(void);
 };
 
