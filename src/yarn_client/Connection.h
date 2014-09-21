@@ -17,6 +17,7 @@ using std::string;
 using std::cerr;
 using std::endl;
 using std::map;
+using ::google::protobuf::Message;
 using log4cplus::Logger;
 
 class Call :virtual public ResourceLock{
@@ -51,7 +52,7 @@ private:
 	bool m_done;
 	RpcCodedMessage* m_request_msg;
 	
-	::google::protobuf::Message* m_response_msg;	
+	Message* m_response_msg;	
 
 };
 
@@ -71,6 +72,8 @@ public:
 	static void* call_handler(void* p_conn);
 
 	void send_rpc_request(Call* rpc_call);
+
+	void receive_rpc_response(Message* const response);
 private:
 	void send_connection_context(string& protocal, const char* auth_method);
 

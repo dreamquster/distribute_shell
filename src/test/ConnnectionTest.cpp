@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include "common.h"
 #include "pthread.h"
 #include <google/protobuf/service.h>
 
@@ -17,11 +18,11 @@ using namespace std;
 
 class ConnectionTest: public testing::Test {
 public:	
-
+	static Logger LOG;
 protected:
 	//Override
 	virtual void SetUp() {
-		m_yarn_conn = new Connection("10.2.23.27", 5923);
+		m_yarn_conn = new Connection("127.0.0.1", 24322);
 	}
 
 	virtual void TearDown() {
@@ -30,6 +31,9 @@ protected:
 protected:
 	Connection* m_yarn_conn;
 };
+
+
+Logger ConnectionTest::LOG = Logger::getInstance(LOG4CPLUS_TEXT("ConnectionTest"));
 
 TEST_F(ConnectionTest, TestOneRPC) {
 	m_yarn_conn->send_conncetion_header();
@@ -51,4 +55,8 @@ TEST_F(ConnectionTest, TestOneRPC) {
 	
 	Call new_app_call(0, RPC_PROTOCOL_BUFFER, &yarn_rpc_request);
 	m_yarn_conn->send_rpc_request(&new_app_call);
+
+	GetNewApplicationResponseProto response;
+	m_yarn_conn->receive_rpc_response(&response);
+	LOG4CPLUS_INFO(Connection::LOG, "receive rpc response content:" );
 }

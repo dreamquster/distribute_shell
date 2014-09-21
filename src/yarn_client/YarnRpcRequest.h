@@ -63,7 +63,6 @@ public:
 private:
 	Message* m_rpc_header;
 	RpcCodedMessage* m_rpc_request;
-	int m_request_len;
 };
 
 

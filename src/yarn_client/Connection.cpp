@@ -1,12 +1,10 @@
 #include "Connection.h"
 #include <unistd.h>
-#include <sys/socket.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>  
 #include <sstream>
 #include <iomanip>
+#include <boost/smart_ptr/scoped_array.hpp>
 #include "utils/const_variable.h"
+#include "utils/ByteUtils.h"
 #include <google/protobuf/service.h>
 #include <google/protobuf/io/coded_stream.h>
 #include <google/protobuf/io/zero_copy_stream_impl_lite.h>
@@ -17,7 +15,6 @@
 using namespace google::protobuf;
 using namespace google::protobuf::io;
 using namespace hadoop::yarn;
-using std::ostringstream;
 using std::endl;
 
 Logger Connection::LOG = Logger::getInstance(LOG4CPLUS_TEXT("Connection"));
@@ -124,6 +121,38 @@ void Connection::send_rpc_request(Call* rpc_call){
 	int len = rpc_request_wrapper.get_length();
 	if (0 < len) {
 		write(rpc_request_wrapper.c_str(), len);
+	}
+}
+
+void Connection::receive_rpc_response(Message* response) {
+	int response_len = 0;
+	receive((char*)&response_len, sizeof(response_len));
+	response_len = ntohl(response_len);
+	if (0 < response_len) {
+		boost::scoped_array<char> buffer(new char[response_len]);
+		int buf_pos = 0;
+		receive(buffer.get(), response_len);
+
+		uint32 header_len = 0; 
+		ByteUtils::ReadVarint32FromArray((uint8*)buffer.get(), &header_len);
+		buf_pos += CodedOutputStream::VarintSize32(header_len);
+		if (0 < header_len) {
+			RpcResponseHeaderProto header;
+			header.ParseFromArray((void*)(buffer.get() + buf_pos), header_len);
+			buf_pos += header_len;
+
+			RpcResponseHeaderProto::RpcStatusProto status = header.status();
+			if (status == RpcResponseHeaderProto::SUCCESS) {
+				LOG4CPLUS_INFO(Connection::LOG, "call successed");
+
+				uint32 body_len = 0;
+				ByteUtils::ReadVarint32FromArray((uint8*)(buffer.get() + buf_pos), &body_len);
+				buf_pos += CodedOutputStream::VarintSize32(body_len);
+				response->ParseFromArray((void*)(buffer.get() + buf_pos), body_len);
+			}
+			
+
+		}
 	}
 }
 

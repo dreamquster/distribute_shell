@@ -37,9 +37,9 @@ const char* RpcCodedMessage::c_str(void) {
 		ArrayOutputStream arr_ostream(m_request_bytes, request_len);
 		CodedOutputStream coded_ostream(&arr_ostream);
 
-		int bigendian_total_size = ByteUtils::to_bigendian_int32(request_len);
+		int net_len  = htonl(byte_count());
 
-		coded_ostream.WriteRaw(&bigendian_total_size, sizeof(bigendian_total_size));
+		coded_ostream.WriteRaw(&net_len, sizeof(net_len));
 
 		serialize(&coded_ostream);
 
@@ -109,7 +109,7 @@ int RpcMessageWrapper::byte_count() const{
 
 	if (m_rpc_request) {
 		int request_size = m_rpc_request->byte_count();
-		total_size += CodedOutputStream::VarintSize32(request_size) + request_size;
+		total_size += request_size;
 	} 
 
 	return total_size;
@@ -122,7 +122,6 @@ bool RpcMessageWrapper::serialize(CodedOutputStream* coded_ostream) {
 	}
 
 	if (m_rpc_request) {
-		coded_ostream->WriteVarint32(m_rpc_request->byte_count());
 		m_rpc_request->serialize(coded_ostream);
 	}
 
