@@ -11,6 +11,13 @@
 #include <log4cplus/helpers/stringhelper.h>
 using log4cplus::Logger;
 
+#include <boost/smart_ptr.hpp>
+#include <boost/atomic.hpp>
+
+#include "Configure.h"
+
+#include "utils/ConvertUtils.h"
+
 
 
 #endif

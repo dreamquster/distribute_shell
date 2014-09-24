@@ -51,6 +51,39 @@
     <ClCompile Include="src\test\ConnnectionTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\yarn_client\service\ApplicationClientProtocolService.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\yarn_protocal\applicationclient_protocol.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\yarn_protocal\applicationmaster_protocol.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\yarn_protocal\containermanagement_protocol.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\yarn_protocal\IpcConnectionContext.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\yarn_protocal\ProtobufRpcEngine.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\yarn_protocal\RpcHeader.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\yarn_protocal\Security.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\yarn_protocal\yarn_protos.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\yarn_protocal\yarn_service_protos.pb.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\test\AppClientProtocolServiceTest.cc">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\ResourceLock.h">
@@ -87,6 +120,42 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\yarn_client\utils\ByteUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\utils\ProtobufUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\service\ApplicationClientProtocolService.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\yarn_protocal\yarn_service_protos.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\yarn_protocal\applicationclient_protocol.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\yarn_protocal\applicationmaster_protocol.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\yarn_protocal\containermanagement_protocol.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\yarn_protocal\ipcconnectioncontext.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\yarn_protocal\protobufrpcengine.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\yarn_protocal\rpcheader.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\yarn_protocal\security.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\yarn_protocal\yarn_protos.pb.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\utils\ConvertUtils.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

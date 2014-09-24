@@ -79,16 +79,27 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\test\AppClientProtocolServiceTest.cc" />
     <ClCompile Include="src\test\BlockingQueueTest.cc" />
     <ClCompile Include="src\test\ConnnectionTest.cpp" />
     <ClCompile Include="src\test\main.cpp" />
     <ClCompile Include="src\yarn_client\Client.cpp" />
     <ClCompile Include="src\yarn_client\Configure.cpp" />
     <ClCompile Include="src\yarn_client\Connection.cpp" />
+    <ClCompile Include="src\yarn_client\service\ApplicationClientProtocolService.cpp" />
     <ClCompile Include="src\yarn_client\utils\BlockingQueue.cc" />
     <ClCompile Include="src\yarn_client\utils\ResourceLock.cpp" />
     <ClCompile Include="src\yarn_client\YarnRpcChannel.cpp" />
     <ClCompile Include="src\yarn_client\YarnRpcRequest.cpp" />
+    <ClCompile Include="src\yarn_client\yarn_protocal\applicationclient_protocol.pb.cc" />
+    <ClCompile Include="src\yarn_client\yarn_protocal\applicationmaster_protocol.pb.cc" />
+    <ClCompile Include="src\yarn_client\yarn_protocal\containermanagement_protocol.pb.cc" />
+    <ClCompile Include="src\yarn_client\yarn_protocal\IpcConnectionContext.pb.cc" />
+    <ClCompile Include="src\yarn_client\yarn_protocal\ProtobufRpcEngine.pb.cc" />
+    <ClCompile Include="src\yarn_client\yarn_protocal\RpcHeader.pb.cc" />
+    <ClCompile Include="src\yarn_client\yarn_protocal\Security.pb.cc" />
+    <ClCompile Include="src\yarn_client\yarn_protocal\yarn_protos.pb.cc" />
+    <ClCompile Include="src\yarn_client\yarn_protocal\yarn_service_protos.pb.cc" />
     <ClCompile Include="utils\ResourceLock.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -96,11 +107,23 @@
     <ClInclude Include="src\yarn_client\common.h" />
     <ClInclude Include="src\yarn_client\Configure.h" />
     <ClInclude Include="src\yarn_client\Connection.h" />
+    <ClInclude Include="src\yarn_client\service\ApplicationClientProtocolService.h" />
     <ClInclude Include="src\yarn_client\utils\const_variable.h" />
     <ClInclude Include="src\yarn_client\utils\ByteUtils.h" />
+    <ClInclude Include="src\yarn_client\utils\ConvertUtils.h" />
+    <ClInclude Include="src\yarn_client\utils\ProtobufUtils.h" />
     <ClInclude Include="src\yarn_client\utils\ResourceLock.h" />
     <ClInclude Include="src\yarn_client\YarnRpcChannel.h" />
     <ClInclude Include="src\yarn_client\YarnRpcRequest.h" />
+    <ClInclude Include="src\yarn_client\yarn_protocal\applicationclient_protocol.pb.h" />
+    <ClInclude Include="src\yarn_client\yarn_protocal\applicationmaster_protocol.pb.h" />
+    <ClInclude Include="src\yarn_client\yarn_protocal\containermanagement_protocol.pb.h" />
+    <ClInclude Include="src\yarn_client\yarn_protocal\ipcconnectioncontext.pb.h" />
+    <ClInclude Include="src\yarn_client\yarn_protocal\protobufrpcengine.pb.h" />
+    <ClInclude Include="src\yarn_client\yarn_protocal\rpcheader.pb.h" />
+    <ClInclude Include="src\yarn_client\yarn_protocal\security.pb.h" />
+    <ClInclude Include="src\yarn_client\yarn_protocal\yarn_protos.pb.h" />
+    <ClInclude Include="src\yarn_client\yarn_protocal\yarn_service_protos.pb.h" />
     <ClInclude Include="utils\blocking_list.h" />
     <ClInclude Include="utils\const_variable.h" />
     <ClInclude Include="utils\ResourceLock.h" />

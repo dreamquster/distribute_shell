@@ -53,7 +53,7 @@ const char* RpcCodedMessage::c_str(void) {
 
 
 
-YarnRpcRequest::YarnRpcRequest(Message* header, Message* message) {
+YarnRpcRequest::YarnRpcRequest(const Message* header, const Message* message) {
 	this->m_rpc_header = header;
 	this->m_rpc_request = message;
 }
@@ -78,7 +78,7 @@ int YarnRpcRequest::byte_count() const {
 	return total_size;
 }
 
-bool YarnRpcRequest::serialize(CodedOutputStream* coded_ostream) {
+bool YarnRpcRequest::serialize(CodedOutputStream* coded_ostream) const  {
 	if (m_rpc_header) {
 		coded_ostream->WriteVarint32(m_rpc_header->ByteSize());
 		m_rpc_header->SerializeToCodedStream(coded_ostream);
@@ -91,7 +91,7 @@ bool YarnRpcRequest::serialize(CodedOutputStream* coded_ostream) {
 	return true;
 }
 
-RpcMessageWrapper::RpcMessageWrapper(Message* header, RpcCodedMessage* request) {
+RpcMessageWrapper::RpcMessageWrapper(const Message* header, const RpcCodedMessage* request) {
 	this->m_rpc_header = header;
 	this->m_rpc_request = request;
 }
@@ -115,7 +115,7 @@ int RpcMessageWrapper::byte_count() const{
 	return total_size;
 }
 
-bool RpcMessageWrapper::serialize(CodedOutputStream* coded_ostream) {
+bool RpcMessageWrapper::serialize(CodedOutputStream* coded_ostream) const  {
 	if (m_rpc_header) {
 		coded_ostream->WriteVarint32(m_rpc_header->ByteSize());
 		m_rpc_header->SerializeToCodedStream(coded_ostream);

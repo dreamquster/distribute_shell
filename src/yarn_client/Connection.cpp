@@ -19,21 +19,31 @@ using std::endl;
 
 Logger Connection::LOG = Logger::getInstance(LOG4CPLUS_TEXT("Connection"));
 
-Connection::Connection(const string& host, const int port)
-{
-	this->m_remote_host = host;
-	this->m_remote_port = port;
-	this->m_remote_sock = NetUtils::INVALID_SOCKET;
+boost::atomic<int> Call::next_callid(0);
+
+void ConnectionId::set_address(const string& address) {
+	static const char SEP = ':';
+	size_t sep_pos = address.find_first_of(SEP);
+	if (sep_pos != string::npos) {
+		remote_host = address.substr(0, sep_pos);
+		remote_port = NetUtils::INVALID_SOCKET;
+		int port_pos = min(sep_pos+1, address.length());
+		ConvertUtils::to_int(address.substr(port_pos, address.length()), &remote_port);	
+	}
+}
+
+
+void Connection::connect_to(const string& host, const int port) {
 	if (NetUtils::INVALID_SOCKET == (m_remote_sock = socket(AF_INET, SOCK_STREAM, 0))) {
 		return;
 	}
 	struct sockaddr_in server_addr;
 	memset(&server_addr, 0, sizeof(server_addr));
-	if(inet_pton(AF_INET, m_remote_host.c_str(), &server_addr.sin_addr.s_addr) <= 0) {
+	if(inet_pton(AF_INET, m_connection_info->remote_host.c_str(), &server_addr.sin_addr.s_addr) <= 0) {
 		return;
 	}
 	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(m_remote_port);
+	server_addr.sin_port = htons(m_connection_info->remote_port);
 	if (connect(m_remote_sock, (sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
 		return;
 	}
@@ -43,8 +53,19 @@ Connection::Connection(const string& host, const int port)
 }
 
 
+Connection::Connection(ConnectionId* conn_id) {
+	m_connection_info.reset(conn_id);
+	connect_to(m_connection_info->remote_host, m_connection_info->remote_port);
+}
+
+
 Connection::~Connection(void)
 {
+}
+
+void Connection::build_connection_context() {
+	send_conncetion_header();
+	send_connection_context(m_connection_info->protocal_name, NULL);
 }
 
 
@@ -89,7 +110,7 @@ void Connection::send_connection_context(string& protocal,const char* auth_metho
 	string debug_msg;
 	IpcConnectionContextProto connect_context_message;
 	connect_context_message.set_protocol(protocal.c_str());
-	connect_context_message.set_allocated_userinfo(this->m_user_information);
+	connect_context_message.set_allocated_userinfo(m_connection_info->user_information);
 
 	RpcRequestHeaderProto rpc_request_header;
 	rpc_request_header.set_rpckind(RPC_PROTOCOL_BUFFER);

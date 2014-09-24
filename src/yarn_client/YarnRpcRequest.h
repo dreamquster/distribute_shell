@@ -18,7 +18,7 @@ public:
 
 	RpcCodedMessage();
 	virtual ~RpcCodedMessage();
-	virtual bool serialize(CodedOutputStream* coded_ostream) = 0;
+	virtual bool serialize(CodedOutputStream* coded_ostream) const = 0;
 	virtual int byte_count(void) const = 0 ;
 
 	int get_length(void) const;
@@ -35,16 +35,16 @@ class YarnRpcRequest: public RpcCodedMessage
 public:
 	static Logger LOG;
 
-	YarnRpcRequest(Message* header, Message* message);
+	YarnRpcRequest(const Message* header,const Message* message);
 	virtual ~YarnRpcRequest(void);	
 
-	bool serialize(CodedOutputStream* coded_ostream);
+	bool serialize(CodedOutputStream* coded_ostream) const;
 	
 	int byte_count(void) const;
 
 private:
-	Message* m_rpc_header;
-	Message* m_rpc_request;
+	const Message* m_rpc_header;
+	const Message* m_rpc_request;
 	
 };
 
@@ -54,15 +54,15 @@ private:
 class RpcMessageWrapper:public RpcCodedMessage
 {
 public:
-	RpcMessageWrapper(Message* header, RpcCodedMessage* request);
+	RpcMessageWrapper(const Message* header, const RpcCodedMessage* request);
 	virtual ~RpcMessageWrapper();
 
-	bool serialize(CodedOutputStream* coded_ostream);
+	bool serialize(CodedOutputStream* coded_ostream) const;
 
 	int byte_count(void) const;
 private:
-	Message* m_rpc_header;
-	RpcCodedMessage* m_rpc_request;
+	const Message* m_rpc_header;
+	const RpcCodedMessage* m_rpc_request;
 };
 
 

@@ -22,6 +22,15 @@ using log4cplus::Logger;
 
 class Call :virtual public ResourceLock{
 public:
+	static boost::atomic<int> next_callid;
+
+	static int get_new_callid(void) {
+		int val = next_callid.load();
+		next_callid.store(val + 1);
+		return val;
+	}
+
+
 	Call(int id, RpcKindProto rpc_kind, RpcCodedMessage* request_param) {
 		this->m_rpc_kind = rpc_kind;
 		this->m_id = id;
@@ -56,6 +65,16 @@ private:
 
 };
 
+struct ConnectionId {
+	string remote_host;
+	int	remote_port;
+	string protocal_name;
+	UserInformationProto* user_information;
+
+	void set_address(const string& address);
+
+};
+
 
 
 class Connection : virtual public ResourceLock
@@ -63,7 +82,9 @@ class Connection : virtual public ResourceLock
 public:
 	static Logger LOG;
 
-	Connection(const string& host, const int port);
+	
+
+	Connection(ConnectionId* conn_id);
 	~Connection(void);
 	int write(const string& msg);
 
@@ -71,11 +92,17 @@ public:
 
 	static void* call_handler(void* p_conn);
 
+	void build_connection_context(void);
+
 	void send_rpc_request(Call* rpc_call);
 
 	void receive_rpc_response(Message* const response);
+
+	int shutdown(void);
 private:
+	void connect_to(const string& host, const int port) ;
 	void send_connection_context(string& protocal, const char* auth_method);
+	int send_conncetion_header(void);
 
 	void write(const char* message_data, int message_len);
 
@@ -84,19 +111,15 @@ private:
 	static const int CONNECTION_CONTEXT_CALL_ID = -3;
 	static const int RPC_CALL_ID = 0;
 private:
-	string m_remote_host;
-	int	m_remote_port;
+	boost::shared_ptr<ConnectionId> m_connection_info;
 	int state;
 	int m_remote_sock;
 	map<int, Call> m_send_calls;
-	UserInformationProto* m_user_information;
+	;
 	pthread_t* m_call_thread;
 	string client_id;
 
-public:
 	
-	int send_conncetion_header(void);
-	int shutdown(void);
 };
 
 
