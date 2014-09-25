@@ -87,6 +87,8 @@
     <ClCompile Include="src\yarn_client\Configure.cpp" />
     <ClCompile Include="src\yarn_client\Connection.cpp" />
     <ClCompile Include="src\yarn_client\service\ApplicationClientProtocolService.cpp" />
+    <ClCompile Include="src\yarn_client\service\ApplicationMasterProtocolServiceImpl.cpp" />
+    <ClCompile Include="src\yarn_client\utils\Base64.cpp" />
     <ClCompile Include="src\yarn_client\utils\BlockingQueue.cc" />
     <ClCompile Include="src\yarn_client\utils\ResourceLock.cpp" />
     <ClCompile Include="src\yarn_client\YarnRpcChannel.cpp" />
@@ -108,11 +110,14 @@
     <ClInclude Include="src\yarn_client\Configure.h" />
     <ClInclude Include="src\yarn_client\Connection.h" />
     <ClInclude Include="src\yarn_client\service\ApplicationClientProtocolService.h" />
+    <ClInclude Include="src\yarn_client\service\ApplicationMasterProtocolServiceImpl.h" />
+    <ClInclude Include="src\yarn_client\utils\Base64.h" />
     <ClInclude Include="src\yarn_client\utils\const_variable.h" />
     <ClInclude Include="src\yarn_client\utils\ByteUtils.h" />
     <ClInclude Include="src\yarn_client\utils\ConvertUtils.h" />
     <ClInclude Include="src\yarn_client\utils\ProtobufUtils.h" />
     <ClInclude Include="src\yarn_client\utils\ResourceLock.h" />
+    <ClInclude Include="src\yarn_client\utils\SASLClient.h" />
     <ClInclude Include="src\yarn_client\YarnRpcChannel.h" />
     <ClInclude Include="src\yarn_client\YarnRpcRequest.h" />
     <ClInclude Include="src\yarn_client\yarn_protocal\applicationclient_protocol.pb.h" />

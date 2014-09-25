@@ -14,32 +14,29 @@ const Logger YarnRpcChannel::LOG = Logger::getInstance(LOG4CPLUS_TEXT("YarnRpcCh
 const int YarnRpcChannel::CLIENT_PROTOCAL_VERSION = 1;
 const char* YarnRpcChannel::RESOURCEMANAGER_ADDRESS = "yarn.resourcemanager.address";
 
-YarnRpcChannel::YarnRpcChannel(const Configure* conf, char* protocol_name){
+YarnRpcChannel::YarnRpcChannel(const Configure* conf, const string& protocol_name,
+	const string& server_addr){
 	m_conf = conf;
 	m_protocol_name = protocol_name;
+	m_server_address = server_addr;
 	init_connection();
 }
 
 void YarnRpcChannel::init_connection() {	
-	const string* rm_address = m_conf->get_property(RESOURCEMANAGER_ADDRESS);
-	if (rm_address) {
-		boost::shared_ptr<ConnectionId> conn_id(new ConnectionId());
-		conn_id->set_address(*rm_address);
-		conn_id->protocal_name = "org.apache.hadoop.yarn.api.ApplicationClientProtocolPB";
-		conn_id->user_information = new UserInformationProto();
-		conn_id->user_information->set_effectiveuser("Administrator");
-		m_yarn_conn.reset(new Connection((ConnectionId*)conn_id.get()));
-		m_yarn_conn->build_connection_context();
-	}
+	boost::shared_ptr<ConnectionId> conn_id(new ConnectionId());
+	conn_id->set_address(m_server_address);
+	conn_id->protocal_name = m_protocol_name;
+	conn_id->user_information = new UserInformationProto();
+	conn_id->user_information->set_effectiveuser("Administrator");
+	m_yarn_conn.reset(new Connection((ConnectionId*)conn_id.get()));
+	m_yarn_conn->build_connection_context();
 }
 
 
 YarnRpcChannel::~YarnRpcChannel(void) {
+
 }
 
-void YarnRpcChannel::set_protocol_name(char* protocol_name) {
-	m_protocol_name = protocol_name;
-}
 
 void YarnRpcChannel::CallMethod(const MethodDescriptor* method, RpcController* controller, 
 	const Message* request, Message* response, Closure* done) {

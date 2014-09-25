@@ -84,6 +84,12 @@
     <ClCompile Include="src\test\AppClientProtocolServiceTest.cc">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\yarn_client\service\ApplicationMasterProtocolServiceImpl.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\utils\Base64.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\ResourceLock.h">
@@ -156,6 +162,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\yarn_client\utils\ConvertUtils.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\service\ApplicationMasterProtocolServiceImpl.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\utils\Base64.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\utils\SASLClient.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

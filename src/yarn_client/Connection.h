@@ -115,9 +115,10 @@ private:
 	int state;
 	int m_remote_sock;
 	map<int, Call> m_send_calls;
-	;
+	
 	pthread_t* m_call_thread;
 	string client_id;
+	string auth_method;
 
 	
 };

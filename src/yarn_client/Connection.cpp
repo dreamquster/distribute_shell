@@ -12,6 +12,8 @@
 #include "yarn_protocal/yarn_service_protos.pb.h"
 #include "yarn_protocal/ProtobufRpcEngine.pb.h"
 
+#include <sasl/sasl.h>
+
 using namespace google::protobuf;
 using namespace google::protobuf::io;
 using namespace hadoop::yarn;
@@ -48,6 +50,7 @@ void Connection::connect_to(const string& host, const int port) {
 		return;
 	}
 
+
 	//pthread_create(this->m_call_thread, NULL, Connection::call_handler, (void*)this);
 
 }
@@ -64,6 +67,9 @@ Connection::~Connection(void)
 }
 
 void Connection::build_connection_context() {
+	if (auth_method == "TOKEN") {
+
+	}
 	send_conncetion_header();
 	send_connection_context(m_connection_info->protocal_name, NULL);
 }
@@ -171,8 +177,6 @@ void Connection::receive_rpc_response(Message* response) {
 				buf_pos += CodedOutputStream::VarintSize32(body_len);
 				response->ParseFromArray((void*)(buffer.get() + buf_pos), body_len);
 			}
-			
-
 		}
 	}
 }

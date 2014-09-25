@@ -6,7 +6,7 @@
 #include "../YarnRpcChannel.h"
 
 using namespace hadoop::yarn;
-using boost::shared_ptr;
+
 
 typedef ApplicationSubmissionContextProto ApplicationSubmissionContext;
 typedef ::hadoop::yarn::ContainerLaunchContextProto ContainerLaunchContext;
@@ -21,17 +21,20 @@ class YarnClientApplication{
 class ApplicationClientProtocolServiceImpl {
 public:
 	static const char* PROTOCOL_NAME;
+	static const string SERVER_ADDRESS_CONF_PROP;
 	static const Logger LOG;
 
 	ApplicationClientProtocolServiceImpl(const Configure* conf);
 
 	virtual ~ApplicationClientProtocolServiceImpl();
 
-	shared_ptr<ApplicationSubmissionContext> create_application(void); 
+	bool create_application(ApplicationSubmissionContext& app_submit_context); 
 
-	void submit_application(shared_ptr<ApplicationSubmissionContext> app_context);
+	void submit_application(const ApplicationSubmissionContext& app_context);
 
-	const ApplicationReport& get_application_report(ApplicationId* app_id);
+	const ApplicationReport get_application_report(const ApplicationId& app_id);
+
+
 
 private:
 	const Configure* m_conf;

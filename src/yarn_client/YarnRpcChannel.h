@@ -12,10 +12,10 @@ public:
 	static const Logger LOG;
 	static const char* RESOURCEMANAGER_ADDRESS;
 
-	YarnRpcChannel(const Configure* conf, char* protocol_name);
+	YarnRpcChannel(const Configure* conf, const string& protocol_name,
+		const string& server_addr);
 	~YarnRpcChannel(void);
 
-	void set_protocol_name(char* protocol_name);
 public:
 	void CallMethod(const MethodDescriptor* method,
 		RpcController* controller,
@@ -27,7 +27,8 @@ private:
 private:
 	static const int CLIENT_PROTOCAL_VERSION;
 	const Configure* m_conf;
-	char* m_protocol_name;
+	string m_protocol_name;
+	string m_server_address;
 	boost::scoped_ptr<Connection> m_yarn_conn;
 };
 #endif
