@@ -77,6 +77,7 @@ namespace RpcConstant {
 
 	static const int DEFAULT_CALLID = 0;
 
+	static const char AUTH_SIMPLE = 80;
 }
 
 #endif

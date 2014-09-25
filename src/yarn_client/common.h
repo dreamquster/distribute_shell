@@ -19,5 +19,9 @@ using log4cplus::Logger;
 #include "utils/ConvertUtils.h"
 
 
+#include <boost/thread/thread.hpp>
+#include <boost/thread/mutex.hpp>
+#include <string>
+using std::string;
 
 #endif
