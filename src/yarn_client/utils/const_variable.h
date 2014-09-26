@@ -4,8 +4,13 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>  
+#include <google/protobuf/service.h>
+#include "ByteUtils.h"
 
 #define ERR_RETURN -1
+
+using google::protobuf::uint8;
+using google::protobuf::uint32;
 
 
 namespace NetUtils {
@@ -71,13 +76,15 @@ namespace RpcConstant {
 
 	static const char CURRENT_VERSION = 9;
 
-	static const char DUMMY_CLIENT_ID = "";
+	static const char DUMMY_CLIENT_ID = '\0';
 
 	static const int SASL_CALLID = -33;
 
 	static const int DEFAULT_CALLID = 0;
 
-	static const char AUTH_SIMPLE = 80;
+	static const char* AUTH_SIMPLE = "SIMPLE";
+
+	static const char* AUTH_TOKEN = "TOKEN";
 }
 
 #endif

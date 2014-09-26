@@ -19,7 +19,6 @@ YarnRpcChannel::YarnRpcChannel(const Configure* conf, const string& protocol_nam
 	m_conf = conf;
 	m_protocol_name = protocol_name;
 	m_server_address = server_addr;
-	init_connection();
 }
 
 void YarnRpcChannel::init_connection() {	
@@ -29,6 +28,7 @@ void YarnRpcChannel::init_connection() {
 	conn_id->user_information = new UserInformationProto();
 	conn_id->user_information->set_effectiveuser("Administrator");
 	m_yarn_conn.reset(new Connection((ConnectionId*)conn_id.get()));
+	m_yarn_conn->set_auth_method(m_auth_method);
 	m_yarn_conn->build_connection_context();
 }
 
@@ -37,6 +37,9 @@ YarnRpcChannel::~YarnRpcChannel(void) {
 
 }
 
+void YarnRpcChannel::set_auth_method(string& authmethod) {
+	this->m_auth_method = authmethod;
+}
 
 void YarnRpcChannel::CallMethod(const MethodDescriptor* method, RpcController* controller, 
 	const Message* request, Message* response, Closure* done) {

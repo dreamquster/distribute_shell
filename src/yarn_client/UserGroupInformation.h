@@ -6,6 +6,8 @@
 using std::map;
 using std::string;
 
+class Token;
+
 class Token {
 public:
 	string user_name;

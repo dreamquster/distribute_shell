@@ -10,6 +10,7 @@
 #include "yarn_protocal/ipcConnectionContext.pb.h"
 
 #include "YarnRpcRequest.h"
+#include "Client.h"
 
 
 using namespace hadoop::common;
@@ -98,6 +99,8 @@ public:
 
 	void receive_rpc_response(Message* const response);
 
+	void set_auth_method(string& authmethod);
+
 	int shutdown(void);
 private:
 	void connect_to(const string& host, const int port) ;
@@ -119,6 +122,7 @@ private:
 	pthread_t* m_call_thread;
 	string client_id;
 	string auth_method;
+	RpcSASLClient* rpc_sasl_client;
 
 	
 };

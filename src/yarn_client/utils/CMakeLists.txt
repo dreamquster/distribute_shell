@@ -1,2 +1,3 @@
 AUX_SOURCE_DIRECTORY(. SRC)
 ADD_LIBRARY(utils ${SRC})
+TARGET_LINK_LIBRARIES(utils boost_system)

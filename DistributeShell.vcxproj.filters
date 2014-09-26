@@ -90,6 +90,12 @@
     <ClCompile Include="src\yarn_client\utils\Base64.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="src\yarn_client\utils\SASLClient.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="src\yarn_client\UserGroupInformation.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\ResourceLock.h">
@@ -171,6 +177,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="src\yarn_client\utils\SASLClient.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="src\yarn_client\UserGroupInformation.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

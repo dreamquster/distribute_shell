@@ -7,5 +7,5 @@ AUX_SOURCE_DIRECTORY(service SERVICE_SRC)
 AUX_SOURCE_DIRECTORY(. SRC)
 
 ADD_LIBRARY(yarnclient ${SRC} ${YARN_PROTOCAL_SRC} ${SERVICE_SRC})
-TARGET_LINK_LIBRARIES(yarnclient utils tinyxml2 protobuf pthread log4cplus)
+TARGET_LINK_LIBRARIES(yarnclient utils tinyxml2 protobuf pthread log4cplus boost_system sasl2) 
 

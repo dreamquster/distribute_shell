@@ -17,7 +17,7 @@ private:
 
 	RpcSaslProto get_init_sasl_response(RpcSaslProto& sasl_message);
 
-	void create_sasl_client(RpcSaslProto& sasl_message);
+	const RpcSaslProto_SaslAuth&  create_sasl_client(RpcSaslProto& sasl_message);
 
 	void init_sasl_client_by_authtype(const RpcSaslProto_SaslAuth& auth_type);
 
@@ -27,6 +27,7 @@ private:
 		
 private:
 	int m_sasl_server_fd;
+	sasl_conn_t* m_sasl_conn;
 };
 #endif
 

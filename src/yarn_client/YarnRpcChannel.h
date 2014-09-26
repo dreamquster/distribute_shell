@@ -16,6 +16,10 @@ public:
 		const string& server_addr);
 	~YarnRpcChannel(void);
 
+	void set_auth_method(string& authmethod);
+
+	void init_connection(void); 
+
 public:
 	void CallMethod(const MethodDescriptor* method,
 		RpcController* controller,
@@ -23,13 +27,15 @@ public:
 		Message* response,
 		Closure* done);
 private:
-	void init_connection(void); 
+	
 private:
 	static const int CLIENT_PROTOCAL_VERSION;
 	const Configure* m_conf;
 	string m_protocol_name;
 	string m_server_address;
 	boost::scoped_ptr<Connection> m_yarn_conn;
+
+	string m_auth_method;
 };
 #endif
 

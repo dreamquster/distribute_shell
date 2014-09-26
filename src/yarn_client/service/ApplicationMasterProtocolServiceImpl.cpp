@@ -9,11 +9,14 @@ const string ApplicationMasterProtocolServiceImpl::SERVER_ADDRESS_CONF_PROP
 const Logger ApplicationMasterProtocolServiceImpl::LOG = 
 	Logger::getInstance(LOG4CPLUS_TEXT("ApplicationMasterProtocolServiceImpl"));
 
-
+static string AUTH_TOKEN = "TOKEN";
 ApplicationMasterProtocolServiceImpl::ApplicationMasterProtocolServiceImpl(const Configure* conf) {
 	this->m_conf = conf;
 	this->m_rpc_channel = new YarnRpcChannel(conf, (char*)PROTOCOL_NAME, 
 		*conf->get_property(SERVER_ADDRESS_CONF_PROP));
+	
+	m_rpc_channel->set_auth_method(AUTH_TOKEN);
+	m_rpc_channel->init_connection();
 	this->app_master_service_stub = new ApplicationMasterProtocolService_Stub(m_rpc_channel);
 }
 

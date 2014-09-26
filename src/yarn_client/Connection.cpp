@@ -50,7 +50,7 @@ void Connection::connect_to(const string& host, const int port) {
 		return;
 	}
 
-
+	rpc_sasl_client = new RpcSASLClient(m_remote_sock);
 	//pthread_create(this->m_call_thread, NULL, Connection::call_handler, (void*)this);
 
 }
@@ -62,15 +62,21 @@ Connection::Connection(ConnectionId* conn_id) {
 }
 
 
-Connection::~Connection(void)
-{
+Connection::~Connection(void) {
+	if (rpc_sasl_client) {
+		delete rpc_sasl_client;
+	}
 }
 
-void Connection::build_connection_context() {
-	if (auth_method == "TOKEN") {
+void Connection::set_auth_method(string& authmethod) {
+	auth_method = authmethod;
+}
 
-	}
+void Connection::build_connection_context() {	
 	send_conncetion_header();
+	if (auth_method == "TOKEN") {
+		rpc_sasl_client->sasl_connect();
+	}
 	send_connection_context(m_connection_info->protocal_name, NULL);
 }
 
@@ -192,7 +198,11 @@ void* Connection::call_handler(void* args) {
 int Connection::send_conncetion_header(void)
 {
 	const char server_class = 0; //int0对应的char 为48
-	const char auth_callid = 0;
+	char auth_callid = RpcConstant::DEFAULT_CALLID;
+	if (auth_method == "TOKEN"){
+		auth_callid = RpcConstant::SASL_CALLID;
+	}
+
 	ostringstream osstream;
 	osstream<<RpcConstant::HEADER<<RpcConstant::CURRENT_VERSION
 		<<server_class<<auth_callid;
